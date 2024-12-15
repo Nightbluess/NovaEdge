@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NovaEdge Interactive</title>
+    <style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #0d0d0d;
+        color: #d4d4d4;
+        overflow-x: hidden;
+    }
+
+    header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem 2rem;
+        background-color: #121212;
+        border-bottom: 2px solid #1f1f1f;
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+    }
+
+   .logo {
+    font-size: 2rem;  /* Yazının boyutunu ayarlayın */
+    font-weight: bold; /* Yazıyı kalın yapın */
+    color: #ffffff;  /* Beyaz renk */
+    text-transform: uppercase; /* Harfleri büyük yapacak */
+    margin-right: 2rem; /* Sağ tarafta biraz boşluk bırakmak için */
+}
+
+    nav ul {
+        list-style: none;
+        display: flex;
+    }
+
+    nav ul li {
+        margin: 0 1rem;
+    }
+
+    nav ul li a {
+        text-decoration: none;
+        color: #d4d4d4;
+        transition: color 0.3s;
+    }
+
+    nav ul li a:hover {
+        color: #32cd32;
+    }
+
+    .hero {
+        height: 100vh;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end; /* Yazıları aşağıya al */
+        align-items: center;
+        text-align: center;
+        color: #d4d4d4;
+    }
+
+    .hero video {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%; /* Video tam ekran olacak */
+        object-fit: cover;
+        z-index: -1; /* Video içeriklerin arkasında olacak */
+    }
+
+    .hero-content {
+        z-index: 1; /* Yazı ve butonlar videonun üstünde olacak */
+        padding-bottom: 20vh; /* Yazıları biraz daha aşağıya kaydırmak için */
+        text-align: center; /* Yazıları ortalamak için */
+        width: 100%;
+    }
+
+    .hero h1 {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+    }
+
+    .hero p {
+        font-size: 1.2rem;
+        margin-bottom: 2rem;
+    }
+
+    .hero a {
+        padding: 0.8rem 1.5rem;
+        background-color: #32cd32;
+        color: #0d0d0d;
+        text-decoration: none;
+        font-weight: bold;
+        border-radius: 5px;
+        transition: background-color 0.3s;
+    }
+
+    .hero a:hover {
+        background-color: #28a428;
+    }
+
+    section {
+        padding: 4rem 2rem;
+    }
+
+    /* "Our Project" başlığına hover efekti */
+    h2 {
+        font-size: 2.5rem;
+        color: #32cd32;
+        text-align: center;
+        margin-bottom: 1rem;
+        position: relative;
+        display: inline-block;
+        opacity: 0;
+        transform: translateY(50px);
+        animation: fadeInUp 1s forwards;
+    }
+
+    h2:nth-child(1) {
+        animation-delay: 0.3s;
+    }
+
+    h2:nth-child(2) {
+        animation-delay: 0.5s;
+    }
+
+    h2:nth-child(3) {
+        animation-delay: 0.7s;
+    }
+
+    /* "fadeInUp" animasyonu tanımlaması */
+    @keyframes fadeInUp {
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* "Our Project" başlığına hoverda alt çizgi efekti */
+    h2::after {
+        content: '';
+        position: absolute;
+        bottom: -5px;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background-color: #32cd32;
+        transform: scaleX(0);
+        transform-origin: bottom right;
+        transition: transform 0.3s ease-out;
+    }
+
+    h2:hover::after {
+        transform: scaleX(1);
+        transform-origin: bottom left;
+    }
+
+    .about {
+        text-align: center;
+    }
+
+    .projects {
+        position: relative;
+        padding: 4rem 2rem;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 2rem;
+    }
+
+   .projects h2 {
+    font-size: 2.5rem;
+    color: #32cd32;
+    text-align: center; /* Yazıyı tam ortaladık */
+    margin-bottom: 3rem;
+    position: absolute;
+    top: -3rem;
+    left: 50%;
+    transform: translateX(-50%); /* Yatayda ortaladık */
+    z-index: 1;
+}
+
+
+    .projects h2::before {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background-color: #32cd32;
+        transform: scaleX(0);
+        transform-origin: bottom right;
+        transition: transform 0.3s ease-out;
+    }
+
+    .projects h2:hover::before {
+        transform: scaleX(1);
+        transform-origin: bottom left;
+    }
+
+    .project-card {
+        background-color: #121212;
+        border: 1px solid #1f1f1f;
+        border-radius: 8px;
+        margin: 1rem;
+        padding: 1.5rem;
+        width: 300px;
+        transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .project-card:hover {
+        transform: scale(1.05);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    .project-card img {
+        width: 100%;
+        height: auto;
+        border-radius: 8px;
+        margin-bottom: 1rem;
+    }
+
+    .project-card h3 {
+        font-size: 1.5rem;
+        color: #32cd32;
+        margin-bottom: 1rem;
+        transition: color 0.3s;
+    }
+
+    .project-card h3:hover {
+        color: #28a428;
+    }
+
+    .project-card p {
+        font-size: 0.9rem;
+        line-height: 1.5;
+        transition: transform 0.3s;
+    }
+
+   
+
+    .contact {
+        text-align: center;
+        background-color: #0d0d0d;
+        padding: 4rem 2rem;
+    }
+
+    .contact h2 {
+        font-size: 2.5rem;
+        color: #32cd32;
+        margin-bottom: 1rem;
+        opacity: 0;
+        transform: translateY(50px);
+        animation: fadeInUp 1s forwards;
+    }
+
+    .contact form {
+        max-width: 600px;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .contact input, .contact textarea, .contact button {
+        padding: 0.8rem;
+        border: 1px solid #1f1f1f;
+        border-radius: 5px;
+        font-size: 1rem;
+        color: #d4d4d4;
+        background-color: #121212;
+        transition: box-shadow 0.3s;
+    }
+
+    .contact input:hover, .contact textarea:hover {
+        box-shadow: 0 0 10px rgba(50, 205, 50, 0.5);
+    }
+
+    .contact textarea {
+        resize: none;
+    }
+
+    .contact button {
+        background-color: #32cd32;
+        border: none;
+        font-weight: bold;
+        transition: background-color 0.3s, transform 0.3s;
+    }
+
+    .contact button:hover {
+        background-color: #28a428;
+        transform: scale(1.1);
+    }
+
+    footer {
+        text-align: center;
+        padding: 1rem;
+        background-color: #121212;
+        border-top: 2px solid #1f1f1f;
+        color: #777;
+    }
+
+    footer a {
+        color: #32cd32;
+        text-decoration: none;
+    }
+
+    footer a:hover {
+        text-decoration: underline;
+    }
+html {
+    scroll-behavior: smooth; /* Sayfalar arasında yumuşak geçiş sağlar */
+}
+#about p {
+    font-size: 1rem;
+    line-height: 1.8; /* Satır yüksekliğini arttırarak okunabilirliği artırdık */
+    max-width: 800px; /* Paragrafın genişliğini sınırladık */
+    margin: 0 auto; /* Yazıyı ortaladık */
+    padding: 20px;
+    text-align: justify; /* Yazıyı düzgün bir şekilde hizaladık */
+}
+a.green-link {
+    color: #32cd32; /* Yeşil renk */
+    text-decoration: none;
+    transition: color 0.3s, background-color 0.3s;
+}
+
+a.green-link:hover {
+    color: #28a428; /* Hover (üzerine gelince) yeşilin biraz koyusu */
+}
+
+a.green-link:active {
+    color: #000000; /* Linke tıklandığında siyah renk */
+}
+/* Kaydırma çubuğu için stil */
+::-webkit-scrollbar {
+    width: 12px;  /* Kaydırma çubuğunun genişliği */
+}
+
+::-webkit-scrollbar-track {
+    background-color: #121212;  /* Kaydırma çubuğunun arka plan rengi */
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #32cd32;  /* Kaydırma çubuğunun kendisi (thumb) için yeşil renk */
+    border-radius: 10px;  /* Yuvarlak köşeler */
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: #28a428;  /* Hover durumunda daha koyu bir yeşil */
+}
+
+
+</style>
+
+
+
+
+</head>
+<body>
+   <header>
+    <div class="logo">NovaEdge</div> <!-- Burada metin kullanıyoruz -->
+    <nav>
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+</header>
+
+   <div class="hero" id="home">
+    <video autoplay loop muted>
+        <source src="dag3.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+    <div class="hero-content">
+        <h1>Welcome to NovaEdge Interactive</h1>
+        <p>Innovating the future of interactive experiences.</p>
+        <a href="#about">Learn More</a>
+    </div>
+</div>
+
+    <section class="about" id="about">
+        <h2>About Us</h2>
+        <p>
+
+At NovaEdge, we are dedicated to creating innovative solutions that empower people through technology. Our team is made up of passionate individuals who strive to make a positive impact in the world. We specialize in developing interactive and engaging experiences that blend education, creativity, and technology.
+
+We believe that learning should be fun, accessible, and dynamic. That’s why we focus on creating products that encourage active participation, collaboration, and critical thinking. Whether it’s through games, applications, or unique digital experiences, our goal is to inspire growth and learning at every stage.
+
+Join us as we continue to push the boundaries of what’s possible, bringing the future of technology to the present.</p>
+    </section>
+
+    <section class="projects" id="projects">
+         <h2>Our Projects</h2>
+    <div class="project-card">
+        <img src="2.png" alt="EdgeLangue">
+        <h3>EdgeLangue</h3>
+        <p>EdgeLangue is a revolutionary language-learning game that combines fun and education in a seamless experience. Explore, learn, and master new languages while playing.</p>
+        <a href="path_to_your_file/your_file.zip" download="EdgeLangue_Project.zip" class="green-link">Pc</a> <br>
+<a href="C:\Users\YASIN\Desktop\EdgeLangue" download="EdgeLangue.zip" class="green-link">Android</a>
+    </div>
+        <div class="project-card">
+            <img src="3.jpg" alt="Project 2">
+            <h3>Coming Soon</h3>
+            <p>A brief description of another innovative project from NovaEdge Interactive.</p>
+        </div>
+    </section>
+
+    <section class="contact" id="contact">
+        <h2>Contact Us</h2>
+        <form>
+            <input type="text" placeholder="Your Name" required>
+            <input type="email" placeholder="Your Email" required>
+            <textarea rows="5" placeholder="Your Message" required></textarea>
+            <button type="submit">Send Message</button>
+        </form>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 NovaEdge Interactive. All rights reserved. | <a href="#contact">Contact Us</a></p>
+    </footer>
+</body>
+</html>
